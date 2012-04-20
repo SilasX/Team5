@@ -1,5 +1,5 @@
 #require './lib/rubymethods.rb'
-require File.expand_path(File.dirname(__FILE__) + '/rubymethods')
+require File.expand_path(File.dirname(__FILE__) +  '/rubymethods')
 require 'dm-serializer'
 
 class Statistics
@@ -42,13 +42,13 @@ class MethodReport
     end
   end
   def append_to_file(file_name = "methods_stats.yml", source = "Unknown", format = :raw)
+    full_path = File.expand_path( File.dirname(__FILE__) + '/../YAML_records/' + file_name)
+    puts full_path
     saved_hash = yaml_hash(source)
-    File.open(file_name,'a') {|f| f.write(saved_hash.to_yaml) }
+    File.open(full_path,'a') {|f| f.write(saved_hash.to_yaml) }
   end
   def yaml_hash origin
-    p @statistics_hash
     output = {:source => origin, :methods => @statistics_hash }
-    p output
     output
   end
 end 

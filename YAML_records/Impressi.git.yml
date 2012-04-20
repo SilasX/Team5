@@ -1,0 +1,24 @@
+--- 
+:source: git://github.com/Devbootcamp/Impressi.git
+:methods: 
+  string: 18
+  find: 8
+  expand_path: 4
+  name: 3
+  each: 3
+  new: 2
+  exists?: 1
+  encoding: 1
+  groups: 1
+  require: 1
+  compile: 1
+  join: 1
+  map: 1
+  min: 1
+  length: 1
+  sort: 1
+  transpose: 1
+  include?: 1
+  gsub: 1
+  inject: 1
+  strip: 1

@@ -9,7 +9,7 @@ class Reflector
     output = MethodReport.new(stats.top_list(method_count.to_i))
     output.format_and_display
     output_file_name = identifier.split("/").last + ".yml"
-    puts "Would you like to output these results to the file #{output_file_name}? (y/n)"
+    puts "Would you like to output these results to the /YAML_records/#{output_file_name}? (y/n)"
     answer = gets.chomp
     if answer == 'y'
       output.append_to_file(output_file_name,identifier)
