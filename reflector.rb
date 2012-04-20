@@ -3,6 +3,12 @@ require File.expand_path(File.dirname(__FILE__) + '/lib/statistics')
 require File.expand_path(File.dirname(__FILE__) + '/lib/rubymethods')
 
 class Reflector
+  def self.handle_results stats
+    puts "How many of the top methods do you want to see? (Default is 10)"
+    method_count = gets.chomp 
+    puts MethodReport.new(stats.top_list(method_count.to_i)).format_and_display
+  end
+  
   def self.start
       puts "Welcome to Ruby Reflector!\nThis program will enlighten your parents and change your life.\n\n"
       quit = false
@@ -28,9 +34,7 @@ class Reflector
               @stats = Statistics.new(methods_list)
             end
           end  
-          puts "How many of the top methods do you want to see? (Default is 10)"
-          method_count = gets.chomp
-          puts MethodReport.new(@stats.top_list(method_count.to_i)).format_and_display
+          handle_results(@stats)
         when "d"
           directoryname = "temp."
           while(directoryname.match(/\./))
@@ -44,9 +48,7 @@ class Reflector
               @stats = Statistics.new(methods_list)
             end
           end  
-          puts "How many of the top methods do you want to see? (Default is 10)"
-          method_count = gets.chomp 
-          puts MethodReport.new(@stats.top_list(method_count.to_i)).format_and_display
+          handle_results(@stats)
         when "g"
           gitname = ""
 
@@ -57,9 +59,7 @@ class Reflector
             methods_list = SourceCode.from_git(gitname).count_methods(rubymethods)
             @stats = Statistics.new(methods_list)
           end
-          puts "How many of the top methods do you want to see? (Default is 10)"
-          method_count = gets.chomp 
-          puts MethodReport.new(@stats.top_list(method_count.to_i)).format_and_display
+          handle_results(@stats)
         end
       end
   end

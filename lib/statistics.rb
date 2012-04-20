@@ -1,5 +1,6 @@
 #require './lib/rubymethods.rb'
 require File.expand_path(File.dirname(__FILE__) + '/rubymethods')
+require 'dm-serializer'
 
 class Statistics
   def initialize(hash)
@@ -36,5 +37,7 @@ class MethodReport
       end
       @output
     end
+  end
+  def append_to_file(file_name = "methods_stats.yml", source = "Unknown", format = :raw)
   end
 end 
