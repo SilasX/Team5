@@ -11,8 +11,11 @@ class Statistics
     top_list(5)
   end
   
-  def top_list(integer)
+  def top_list(integer = 0)
    @output_hash = {}
+   if integer == 0
+     integer = @hash.size
+   end
    top_x_list = @hash.sort_by {|key, value| value}.reverse[0..(integer-1)]
    top_x_list.each { |pair| @output_hash[pair[0]] = pair[1] }
    @output_hash
@@ -39,6 +42,13 @@ class MethodReport
     end
   end
   def append_to_file(file_name = "methods_stats.yml", source = "Unknown", format = :raw)
-    File.open(file_name,'a') {|f| f.write(@statistics_hash.to_yaml) }
+    saved_hash = yaml_hash(source)
+    File.open(file_name,'a') {|f| f.write(saved_hash.to_yaml) }
+  end
+  def yaml_hash origin
+    p @statistics_hash
+    output = {:source => origin, :methods => @statistics_hash }
+    p output
+    output
   end
 end 

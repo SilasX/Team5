@@ -3,11 +3,20 @@ require File.expand_path(File.dirname(__FILE__) + '/lib/statistics')
 require File.expand_path(File.dirname(__FILE__) + '/lib/rubymethods')
 
 class Reflector
-  def self.handle_results stats
-    puts "How many of the top methods do you want to see? (Default is 10)"
+  def self.handle_results stats, identifier
+    puts "How many of the top methods do you want to see? (0 to see all)"
     method_count = gets.chomp
-    puts MethodReport.new(stats.top_list(method_count.to_i)).format_and_display
-    MethodReport.new(stats).append_to_file
+    output = MethodReport.new(stats.top_list(method_count.to_i))
+    output.format_and_display
+    output_file_name = identifier.split("/").last + ".yml"
+    puts "Would you like to output these results to the file #{output_file_name}? (y/n)"
+    answer = gets.chomp
+    if answer == 'y'
+      output.append_to_file(output_file_name,identifier)
+      puts "Alright, it's ready to view!"
+    else
+      "That's a no, then. Okay."
+    end
   end
   
   def self.start
@@ -35,7 +44,7 @@ class Reflector
               @stats = Statistics.new(methods_list)
             end
           end  
-          handle_results(@stats)
+          handle_results(@stats,filename)
         when "d"
           directoryname = "temp."
           while(directoryname.match(/\./))
@@ -49,7 +58,7 @@ class Reflector
               @stats = Statistics.new(methods_list)
             end
           end  
-          handle_results(@stats)
+          handle_results(@stats, directoryname)
         when "g"
           gitname = ""
 
@@ -60,7 +69,7 @@ class Reflector
             methods_list = SourceCode.from_git(gitname).count_methods(rubymethods)
             @stats = Statistics.new(methods_list)
           end
-          handle_results(@stats)
+          handle_results(@stats, gitname)
         end
       end
   end
