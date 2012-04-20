@@ -39,5 +39,6 @@ class MethodReport
     end
   end
   def append_to_file(file_name = "methods_stats.yml", source = "Unknown", format = :raw)
+    File.open(file_name,'a') {|f| f.write(@statistics_hash.to_yaml) }
   end
 end 

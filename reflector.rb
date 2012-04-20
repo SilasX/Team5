@@ -5,8 +5,9 @@ require File.expand_path(File.dirname(__FILE__) + '/lib/rubymethods')
 class Reflector
   def self.handle_results stats
     puts "How many of the top methods do you want to see? (Default is 10)"
-    method_count = gets.chomp 
+    method_count = gets.chomp
     puts MethodReport.new(stats.top_list(method_count.to_i)).format_and_display
+    MethodReport.new(stats).append_to_file
   end
   
   def self.start
